@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.9.23)  26 SEP 2019 12:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.9.23)  26 SEP 2019 19:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**lec3.tex
-(./lec3.tex
+**lec7.tex
+(./lec7.tex
 LaTeX2e <2017-04-15>
 Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
 (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
@@ -259,12 +259,8 @@ Package: graphicx 2017/06/01 v1.1a Enhanced LaTeX Graphics (DPC,SPQR)
 )
 \c@lecnum=\count116
 \c@theorem=\count117
- (./lec3.aux
-
-LaTeX Warning: Label `fig: function_space' multiply defined.
-
-)
-\openout1 = `lec3.aux'.
+ (./lec7.aux)
+\openout1 = `lec7.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 111.
 LaTeX Font Info:    ... okay on input line 111.
@@ -280,7 +276,8 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 111.
 LaTeX Font Info:    ... okay on input line 111.
 LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 111.
 LaTeX Font Info:    ... okay on input line 111.
- (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count118
 \scratchdimen=\dimen134
@@ -325,104 +322,102 @@ LaTeX Info: Redefining \ref on input line 111.
 LaTeX Info: Redefining \pageref on input line 111.
 LaTeX Info: Redefining \nameref on input line 111.
 
-(./lec3.out) (./lec3.out)
+(./lec7.out) (./lec7.out)
 \@outlinefile=\write3
-\openout3 = `lec3.out'.
+\openout3 = `lec7.out'.
 
-<images/mdp.png, id=60, 1072.005pt x 576.1525pt>
-File: images/mdp.png Graphic file (type png)
-<use images/mdp.png>
-Package pdftex.def Info: images/mdp.png  used on input line 131.
-(pdftex.def)             Requested size: 214.3972pt x 115.22845pt.
-LaTeX Font Info:    Try loading font information for U+msa on input line 139.
+LaTeX Font Info:    Try loading font information for U+msa on input line 129.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 139.
+LaTeX Font Info:    Try loading font information for U+msb on input line 129.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 162.
+<images/agent_env_interaction.png, id=48, 731.73375pt x 290.08376pt>
+File: images/agent_env_interaction.png Graphic file (type png)
+<use images/agent_env_interaction.png>
+Package pdftex.def Info: images/agent_env_interaction.png  used on input line 1
+36.
+(pdftex.def)             Requested size: 292.68831pt x 116.03143pt.
 
+Underfull \vbox (badness 2005) has occurred while \output is active []
 
-(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 162.
  [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./images/mdp.png>]
-Package epstopdf Info: Source file: <images/function_space.eps>
-(epstopdf)                    date: 2019-09-10 20:47:54
-(epstopdf)                    size: 22454 bytes
-(epstopdf)             Output file: <images/function_space-eps-converted-to.pdf
->
-(epstopdf)                    date: 2019-09-10 20:50:22
-(epstopdf)                    size: 11902 bytes
-(epstopdf)             Command: <repstopdf --outfile=images/function_space-eps-
-converted-to.pdf images/function_space.eps>
-(epstopdf)             \includegraphics on input line 176.
-Package epstopdf Info: Output file is already uptodate.
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./images/agent_env_interac
+tion.png>]
+<images/mdp.png, id=67, 1072.005pt x 576.1525pt>
+File: images/mdp.png Graphic file (type png)
+<use images/mdp.png>
+Package pdftex.def Info: images/mdp.png  used on input line 160.
+(pdftex.def)             Requested size: 214.3972pt x 115.22845pt.
+ [2 <./images/mdp.png>]
+Overfull \hbox (1.11494pt too wide) in paragraph at lines 224--226
+\OT1/cmr/m/n/10 For any ar-bi-trary pol-icy $\OML/cmm/m/it/10 ^^Y$\OT1/cmr/m/n/
+10 , we can ob-tain an equal or bet-ter pol-icy by greed-i-fi-ca-tion: $\OML/cm
+m/m/it/10 ^^Y[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 s\OT1/cmr/m/n/10 ) = [] [][] \
+OML/cmm/m/it/10 q[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 s; a\OT1/cmr/m/n/10 )$.
+ []
 
 
-pdfTeX warning: /usr/bin/pdflatex (file ./images/function_space-eps-converted-t
-o.pdf): PDF inclusion: found PDF version <1.7>, but at most version <1.5> allow
-ed
-<images/function_space-eps-converted-to.pdf, id=77, 120.45pt x 148.555pt>
-File: images/function_space-eps-converted-to.pdf Graphic file (type pdf)
-<use images/function_space-eps-converted-to.pdf>
-Package pdftex.def Info: images/function_space-eps-converted-to.pdf  used on in
-put line 176.
-(pdftex.def)             Requested size: 84.3144pt x 103.98778pt.
-[2 <./images/function_space-eps-converted-to.pdf>] [3]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [4]
-[5]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 341.
- [6]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 341.
- (./lec3.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 341.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 341.
-Package rerunfilecheck Info: File `lec3.out' has not changed.
-(rerunfilecheck)             Checksum: 68D398B3366210CCB34FF004DA062D5D;1073.
+ [3]
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 250.
 
 
-LaTeX Warning: There were multiply-defined labels.
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `subscript' on input line 250.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 341.
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `\pi' on input line 250.
+
+
+Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
+(hyperref)                removing `math shift' on input line 250.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 255.
+[4]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 255.
+ (./lec7.aux)
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 255.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 255.
+Package rerunfilecheck Info: File `lec7.out' has not changed.
+(rerunfilecheck)             Checksum: 21727942162FD1C00D1C824EFD256371;766.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 255.
  ) 
 Here is how much of TeX's memory you used:
- 6416 strings out of 492982
- 94451 string characters out of 6134896
- 191072 words of memory out of 5000000
- 9891 multiletter control sequences out of 15000+600000
- 7556 words of font info for 29 fonts, out of 8000000 for 9000
+ 6391 strings out of 492982
+ 93913 string characters out of 6134896
+ 185615 words of memory out of 5000000
+ 9886 multiletter control sequences out of 15000+600000
+ 11903 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 28i,13n,31p,576b,418s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 28i,12n,31p,553b,332s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/shar
 e/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texl
 ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf-dis
-t/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr5.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl
-10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
-></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/
-share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/share/texlive
-/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on lec3.pdf (6 pages, 234027 bytes).
+xmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dist/font
+s/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr7.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+sl10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></us
+r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share
+/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on lec7.pdf (4 pages, 224141 bytes).
 PDF statistics:
- 217 PDF objects out of 1000 (max. 8388607)
- 179 compressed objects within 2 object streams
- 41 named destinations out of 1000 (max. 500000)
- 123 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 140 PDF objects out of 1000 (max. 8388607)
+ 113 compressed objects within 2 object streams
+ 17 named destinations out of 1000 (max. 500000)
+ 99 words of extra memory for PDF output out of 10000 (max. 10000000)
 
