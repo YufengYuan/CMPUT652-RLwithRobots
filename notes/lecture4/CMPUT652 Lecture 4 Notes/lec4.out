@@ -1,8 +1,0 @@
-\BOOKMARK [1][-]{section.1}{Discussion: Last Lecture}{}% 1
-\BOOKMARK [1][-]{section.2}{Notation}{}% 2
-\BOOKMARK [1][-]{section.3}{Linear Function Approximation}{}% 3
-\BOOKMARK [2][-]{subsection.3.1}{Exact vs. Sample-based MSE objectives}{section.3}% 4
-\BOOKMARK [2][-]{subsection.3.2}{Optimization of the Objective function}{section.3}% 5
-\BOOKMARK [2][-]{subsection.3.3}{Gradient Descent Method and Convergence}{section.3}% 6
-\BOOKMARK [1][-]{section.4}{Non Linear Function Approximation}{}% 7
-\BOOKMARK [2][-]{subsection.4.1}{SGD and Backpropagation }{section.4}% 8

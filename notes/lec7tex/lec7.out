@@ -1,0 +1,11 @@
+\BOOKMARK [1][-]{section.1}{Last Lecture}{}% 1
+\BOOKMARK [1][-]{section.2}{Finite Markov Decision Process}{}% 2
+\BOOKMARK [2][-]{subsection.2.1}{Agent-Environment Interaction}{section.2}% 3
+\BOOKMARK [2][-]{subsection.2.2}{Transition Probabilities and Return}{section.2}% 4
+\BOOKMARK [2][-]{subsection.2.3}{A Small Example of MDP}{section.2}% 5
+\BOOKMARK [1][-]{section.3}{Value Functions}{}% 6
+\BOOKMARK [2][-]{subsection.3.1}{Recursive Relationship of Value Functions}{section.3}% 7
+\BOOKMARK [1][-]{section.4}{Optimal Values and Policies}{}% 8
+\BOOKMARK [2][-]{subsection.4.1}{Greedification of Policies}{section.4}% 9
+\BOOKMARK [2][-]{subsection.4.2}{Bellman Optimality Function}{section.4}% 10
+\BOOKMARK [2][-]{subsection.4.3}{SGD to Estimate v}{section.4}% 11

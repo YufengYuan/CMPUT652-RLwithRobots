@@ -1,0 +1,169 @@
+\documentclass{article}
+
+\usepackage[english]{babel}
+\usepackage[square, numbers]{natbib}
+\usepackage{url}
+\bibliographystyle{abbrvnat}
+\setcitestyle{authoryear,open={(},close={)}}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{physics}
+\usepackage{gensymb}
+\usepackage{verbatim}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{tikz-cd}
+\usepackage{graphicx}
+\usepackage{microtype}
+\usepackage{centernot}
+\usepackage{mathtools}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{algorithm, algpseudocode}
+\usepackage{bm}
+\usepackage{caption}
+\usepackage{enumitem}
+
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+\usepackage{tikz}
+\usetikzlibrary{shapes}
+
+\usepackage[title]{appendix}
+\usepackage{cleveref}
+\usepackage{fancyhdr}
+
+
+\pgfplotsset{height=8cm, width=15cm,compat=1.9}
+
+\DeclareMathOperator*{\esssup}{ess\,sup}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\Ex}{\mathbb{E}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand*\diff{\mathop{}\!\mathrm{d}}
+\newcommand*\Diff[1]{\mathop{}\!\mathrm{d^#1}}
+
+\newtheorem{definition}{Definition}
+\newtheorem{exercise}{Exercise}
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{example}{Example}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Alan Chan}
+\chead{19 Sep. 2019 Notes}
+\lhead{CMPUT 652}
+\rfoot{Page \thepage}
+\date{}
+\begin{document}
+
+
+\section{REINFORCE}
+Let's start from first principles and derive the REINFORCE update. Assume that our policy (in the bandit case) is parametrised by a parameter $\theta$. The ``exact'' objective function is given by
+\begin{equation*}
+  \nu(\theta) = -\int \pi_\theta(a) q(a) \, da
+\end{equation*}
+
+\noindent Assuming that $\pi_\theta$ is continuously differentiable with respect to $\theta$ (for differentation to make sense and to justify pulling the gradient into the integral) and that $\pi(a) > 0$ for all $a$, we can calculate the gradient as
+\begin{align*}
+  \nabla \nu(\theta) &= -\int \nabla\pi_\theta(a) q(a)\, da\\
+  &= -\int \pi_\theta(a) \frac{\nabla \pi_\theta(a)}{\pi_\theta(a)} q(a)\, da\\
+  &= -\int \pi_\theta(a) \nabla \log \pi_\theta(a) q(a)\, da\\
+  &= -\Ex[\nabla \log \pi_\theta(A_t) q(A_t)]\\
+  &= -\Ex[\nabla \log \pi_\theta(A_t) R_t].
+\end{align*}
+
+\noindent The SGD update is just a sample of the above:
+\begin{equation*}
+  -\nabla \log \pi_\theta(A_t) R_t.
+\end{equation*}
+
+\noindent We cannot easily perform this update in PyTorch. One approach is to define a surrogate objective function:
+\begin{equation*}
+  \ell_t = - \log \pi_\theta(A_t) R_t.
+\end{equation*}
+
+\noindent Note that $\ell_t$ is not an unbiased estimate of $\nu(\theta)$, but taking the gradient of $\ell_t$ does give an unbiased estimate of $\nu(\theta)$.
+
+\begin{exercise}
+  Assume the reward funtion is $R(a) = -(a - 10)^2$. Derive the REINFORCE update for a policy parametrized as a normal distribution. Parametrise the mean and standard deviation separately. Run in PyTorch.
+\end{exercise}
+
+\section{U N I F I C A T I O N}
+Our main goal in this section is to unify some objective functions used in supervised learning and reinforcement learning. In regression, we saw that the mean-squared error objective comes from maximizing a log-likelihood. We also now know that the log-likelihood objective can be written as a cross-entropy objective. The maximum log-likelihood (MLL) objective is
+\begin{equation*}
+  -\frac{1}{t} \sum_{i = 1}^t \log(p(Y_i \mid \theta)).
+\end{equation*}
+
+\noindent The cross-entropy (CE) objective, commonly used in classification, is
+\begin{align*}
+  \text{CE}(p^*, p_\theta) &= -\int p^*(y) \log p(y \mid \theta)\, dy\\
+  &= \Ex[-\log p_\theta(Y \mid \theta)]
+\end{align*}
+
+Therefore, we recover the MLL objective from the CE objective.
+
+Let's try to write the policy gradient objective as a CE objective. Recall that the policy gradient objective is
+\begin{equation}
+  \nu(\theta) = - \int \pi_\theta(a) q(a)\, da.
+\end{equation}
+
+\noindent One way to frame what we are trying to accomplish is that we are trying to estimate the distribution of the optimal policy. Let $\pi^*$ be an optimal policy (assuming existence, of course). Given that the CE objective is not symmetric, there are two possible objectives.
+\begin{align*}
+  \text{CE}(\pi^*, \pi_\theta) &= -\int \pi^*(a) \log \pi_\theta(a)\, da\\
+  \text{CE}(\pi_\theta, \pi^*) &= -\int \pi_\theta(a) \log \pi^*(a)\, da
+\end{align*}
+
+\noindent Which one should we choose? The first one is not a good candidate because we are not selecting actions according to the optimal policy at first. We do not have an oracle to give us $\pi^*$. Rather, data is generated based on the actions of an initially suboptimal agent. If we wish to form stochastic estimates of our objective, we better make sure that any integrals are over a policy we actually possess. This argument leaves us with the second objective.
+
+Note that the second objective is somewhat similar to the policy gradient objective, where $\log \pi^*(a)$ is replaced with $q(a)$. How do we solidify this connection? One way is to to define ``good'' policy $\pi^*$ via a Boltzmann distribution (softmax) over the (true) action values.
+\begin{equation*}
+  \pi^*(a) = Z^{-1} e^{q(a) \tau^{-1}}.
+\end{equation*}
+
+\noindent $Z$ is a normalizing constant and $\tau$ is called the \textit{temperature}, which controls the entropy of the distribution. Note that this policy is not necessarily the optimal policy (hence why we call it ``good''), as there is still a non-zero chance of taking each action. Taking logs, we have
+\begin{equation} \label{eq:good-policy}
+  \log \pi^*(a) = \tau^{-1} q(a) - \log Z.
+\end{equation}
+
+\noindent We can recover the policy gradient objective now. In particular, with this definition of $\pi^*$, we have
+\begin{align*}
+  -\argmin_\theta \int \pi_\theta(a) \log \pi^*(a)\, da &= -\argmin_\theta\int \pi_\theta(a)( \tau^{-1} q(a) - \log Z) \, da \\
+  &= -\argmin_\theta \int \pi_\theta(a) q(a) \, da.
+\end{align*}
+
+\noindent Let's now try to unify value-based and policy-based methods. We define the KL-divergence between two distributions:
+\begin{equation}
+  \text{KL}(\pi_\theta, \pi^*) := \int \pi_\theta(a) \log\frac{\pi_\theta(a)}{\pi^*(a)}\, da.
+\end{equation}
+
+\noindent Note that the KL-divergence is not symmetric. Taking gradients, we have
+\begin{align}
+  \nabla \text{KL}(\pi_\theta, \pi^*) &= \nabla\left(-  \int  \pi_\theta(a) \log \pi^*(a)\, da + \int \pi_\theta(a) \log \pi_\theta(a)\, da \right) \nonumber \\
+&= \nabla\text{CE}(\pi_\theta, \pi^*) -\nabla\text{Entropy}(\pi_\theta) \nonumber \\
+&= -\Ex[\nabla \log \pi_\theta(A_t) \left( R_t - \log \pi_\theta(A_t) \right)].
+ \label{eq:log-reinforce}
+\end{align}
+
+%  &= \Ex[\nabla \log \pi_\theta(A_t)(R_t - \log \pi^*(A_t))].
+
+\noindent As usual, we assume $\pi_\theta(a) > 0$ for all $a$ in order to apply the REINFORCE trick. In particular, this assumption is satisfied if $\pi_\theta$ is parametrised as a Boltzmann distribution.
+
+We have an additional $\log \pi_\theta(A_t)$ term in \Cref{eq:log-reinforce}, which is suggestive of entropy. If our policy parametrization is also Boltzmann, and we estimate action values with $\hat{q}_\theta$, we can substitute $\log \pi_\theta(A_t)$ (and an analagous equation for $\log \pi_\theta(A_t)$) from \Cref{eq:good-policy} into \Cref{eq:log-reinforce} to obtain
+\begin{align}
+  \nabla \text{KL}(\pi_\theta, \pi^*) &= \Ex[ (R_t - \tau^{-1} \hat{q}_\theta(A_t) + \log Z) \nabla\hat{q}_\theta(A_t)]. \label{eq:qlearning}
+\end{align}
+
+\noindent This looks quite a bit like a Q-Learning update for bandits. Note that $- \tau^{-1} q(A_t)$ in \Cref{eq:qlearning} is distinct from the baseline term in actor-critic, since the term that would be a baseline here is action-dependent.
+
+
+
+\end{document}

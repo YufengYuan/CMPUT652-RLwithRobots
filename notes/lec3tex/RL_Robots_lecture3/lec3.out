@@ -1,0 +1,10 @@
+\BOOKMARK [1][-]{section.1}{Introduction}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Formulating a parameterized function}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{Defining an objective function}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{Learning Methods}{section.1}% 4
+\BOOKMARK [1][-]{section.2}{Deriving squared loss from Maximum Likelihood Estimate}{}% 5
+\BOOKMARK [2][-]{subsection.2.1}{Method of Averages}{section.2}% 6
+\BOOKMARK [3][-]{subsubsection.2.1.1}{Constant step\205size update}{subsection.2.1}% 7
+\BOOKMARK [1][-]{section.3}{Bias and Variance of different estimates}{}% 8
+\BOOKMARK [2][-]{subsection.3.1}{Bias and Variance of Sample Average Method}{section.3}% 9
+\BOOKMARK [2][-]{subsection.3.2}{Bias and Variance of Constant Step\205size Estimate}{section.3}% 10
