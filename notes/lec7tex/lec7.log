@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.9.23)  28 SEP 2019 14:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2019.9.23)  29 SEP 2019 12:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -336,7 +336,7 @@ LaTeX Font Info:    Try loading font information for U+msb on input line 129.
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-<images/agent_env_interaction.png, id=48, 731.73375pt x 290.08376pt>
+<images/agent_env_interaction.png, id=44, 731.73375pt x 290.08376pt>
 File: images/agent_env_interaction.png Graphic file (type png)
 <use images/agent_env_interaction.png>
 Package pdftex.def Info: images/agent_env_interaction.png  used on input line 1
@@ -349,54 +349,43 @@ Underfull \vbox (badness 2005) has occurred while \output is active []
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./images/agent_env_interac
 tion.png>]
-<images/mdp.png, id=67, 1072.005pt x 576.1525pt>
+<images/mdp.png, id=63, 1072.005pt x 576.1525pt>
 File: images/mdp.png Graphic file (type png)
 <use images/mdp.png>
 Package pdftex.def Info: images/mdp.png  used on input line 160.
 (pdftex.def)             Requested size: 214.3972pt x 115.22845pt.
- [2 <./images/mdp.png>]
-Overfull \hbox (1.11494pt too wide) in paragraph at lines 224--226
-\OT1/cmr/m/n/10 For any ar-bi-trary pol-icy $\OML/cmm/m/it/10 ^^Y$\OT1/cmr/m/n/
-10 , we can ob-tain an equal or bet-ter pol-icy by greed-i-fi-ca-tion: $\OML/cm
-m/m/it/10 ^^Y[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 s\OT1/cmr/m/n/10 ) = [] [][] \
-OML/cmm/m/it/10 q[]\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 s; a\OT1/cmr/m/n/10 )$.
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [3]
+ [2 <./images/mdp.png>] [3]
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 250.
+(hyperref)                removing `math shift' on input line 247.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `subscript' on input line 250.
+(hyperref)                removing `subscript' on input line 247.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\pi' on input line 250.
+(hyperref)                removing `\pi' on input line 247.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `math shift' on input line 250.
+(hyperref)                removing `math shift' on input line 247.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 255.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 252.
 [4]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 255.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 252.
  (./lec7.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 255.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 255.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 252.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 252.
 Package rerunfilecheck Info: File `lec7.out' has not changed.
-(rerunfilecheck)             Checksum: 21727942162FD1C00D1C824EFD256371;766.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 255.
+(rerunfilecheck)             Checksum: F4A8885223DF157F5D503A3B41BD7A71;690.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 252.
  ) 
 Here is how much of TeX's memory you used:
- 6391 strings out of 492982
- 93913 string characters out of 6134896
+ 6389 strings out of 492982
+ 93883 string characters out of 6134896
  185615 words of memory out of 5000000
- 9886 multiletter control sequences out of 15000+600000
+ 9885 multiletter control sequences out of 15000+600000
  11903 words of font info for 46 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  28i,12n,31p,553b,332s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -414,10 +403,10 @@ sl10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.p
 fb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></us
 r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on lec7.pdf (4 pages, 224136 bytes).
+Output written on lec7.pdf (4 pages, 224496 bytes).
 PDF statistics:
- 140 PDF objects out of 1000 (max. 8388607)
- 113 compressed objects within 2 object streams
- 17 named destinations out of 1000 (max. 500000)
- 99 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 136 PDF objects out of 1000 (max. 8388607)
+ 109 compressed objects within 2 object streams
+ 16 named destinations out of 1000 (max. 500000)
+ 91 words of extra memory for PDF output out of 10000 (max. 10000000)
 

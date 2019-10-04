@@ -1,0 +1,280 @@
+
+
+\documentclass[twoside]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+\setlength{\oddsidemargin}{0.25 in}
+\setlength{\evensidemargin}{-0.25 in}
+\setlength{\topmargin}{-0.6 in}
+\setlength{\textwidth}{6.5 in}
+\setlength{\textheight}{8.5 in}
+\setlength{\headsep}{0.75 in}
+\setlength{\parindent}{0 in}
+\setlength{\parskip}{0.1 in}
+
+\newcommand{\x}{{\bf x}}
+\newcommand{\w}{{\bf w}}
+\newcommand{\q}{{\bf q}}
+\newcommand{\br}{{\bf r}}
+\newcommand{\bP}{{\bf P}}
+\newcommand{\on}{\operatorname}
+\newcommand{\E}{\on{E} }
+
+\title{Assignment 1 for CMPUT 652 RL with Robots}
+
+
+\begin{document}
+
+\maketitle
+
+Total 110 points. Complete  within the given space using \LaTeX ~or handwritten notes. Show the derivations or the steps for obtaining partial points. On the other hand, mistakes, missteps or bad reasoning behind a correct answer will result in points deducted. Submit at armahmood@ualberta.ca
+
+\newpage
+
+\section{\normalsize 
+Consider the supervised regression problem of predicting an output $Y$ from a vector input $\bf x$ using a linear function with a vector parameter $\bf w$. We found in the lecture that the Mean Squared Error (MSE) $\E\left[ \left( Y - \x^\top\w \right)^2 \right]$ is a reasonable objective for this problem.
+Derive the Least-Squares (LS) method, defined below, from MSE (5 points).
+}
+\begin{align}
+\w^{\on{LS}}_{t+1} &= \left( \frac{1}{t} \sum_{k=1}^t \x_k \x_k^\top \right)^{-1} \left( \frac{1}{t} \sum_{k=1}^t \x_k Y_k \right).
+\end{align}
+
+\begin{align*}
+	\E\left[ \left( Y - \x^\top\w \right)^2 \right] &= \E \left[ Y^2 + \w^\top\x\x^\top\w - 2\w^\top\x Y \right] \\
+	&= \E\left[Y^2\right] + \w^\top\E\left[\x\x^\top \right]\w - 2\w^\top\E\left[\x Y \right] \\
+	&\text{taking the gradient w.r.t weight} \\
+	\nabla_{\w}\E\left[ \left( Y - \x^\top\w \right)^2 \right] &= 2\E\left[\x\x^\top \right]\w - 2\E\left[\x Y \right] = 0 \\
+	\w^* &= \E\left[\x\x^\top\right]^{-1}\E\left[\x Y\right] \\
+	&\text{\centering{use t samples to approximate the result from least squared method}}\\
+	\w^{\on{LS}}_{t+1} &= \left( \frac{1}{t} \sum_{k=1}^t \x_k \x_k^\top \right)^{-1} \left( \frac{1}{t} \sum_{k=1}^t \x_k Y_k \right)
+\end{align*}
+
+\vspace{1cm}
+\section{\normalsize 
+Continuing with the supervised regression problem, derive the Stochastic Gradient Descent (SGD) method, defined below, from MSE (5 points).
+}
+\begin{align}
+\w_{t+1} &= \w_{t} + 2 \alpha_t \left( Y_t - \x_t^\top \w_t \right) \x_t.
+\end{align}
+
+\begin{align*}
+\E\left[ \left( Y - \x^\top\w \right)^2 \right] &= \E \left[ Y^2 + \w^\top\x\x^\top\w - 2\w^\top\x Y \right] \\
+&= \E\left[Y^2\right] + \w^\top\E\left[\x\x^\top \right]\w - 2\w^\top\E\left[\x Y \right] \\
+&\text{taking the gradient w.r.t weight} \\
+\nabla_{\w}\E\left[ \left( Y - \x^\top\w \right)^2 \right] &= 2\E\left[\x\x^\top \right]\w - 2\E\left[\x Y \right] = 0 \\
+&\text{approximate with a single sample} \\
+&\approx 2\left(\x_t\x_t^\top\w-\x_tY_t \right)\\
+&\approx -2\left(Y_t - \x_t^\top\w_t\right)\x_t\\
+&\text{use a as step size} \\
+\w_{t+1} &= \w_{t} + 2 \alpha_t \left( Y_t - \x_t^\top \w_t \right) \x_t
+\end{align*}
+
+ \newpage
+\section{\normalsize 
+According to the strong law of large numbers, sample mean is a consistent estimator of the expected value (See Lemma 3, pg 18, of \href{https://era.library.ualberta.ca/files/cbc386j54q/Mahmood_Ashique_201709_PhD.pdf}{Mahmood 2017}). Use this fact to argue that the sample MSE $\frac{1}{t} \sum_{k=1}^t \left( Y_k - \x_k^\top\w \right)^2$ objective is a consistent estimator of MSE (5 points).
+}
+
+
+
+\vspace{8.5cm}
+
+\section{\normalsize 
+Similarly, argue that LS is a consistent estimator of the solution to MSE (5 points).
+}
+
+\newpage
+
+\section{\normalsize 
+Establish a relationship between MSE and the following: $\E_{\x}\left[ \left( \E_{Y|{\x}}\left[ Y\right] - \x^\top\w \right)^2 \right]$.
+Note that MSE can be written as $\E\left[ (Y - \x^\top \w)^2 \right] = \E_{\x}\E_{Y|{\x}}\left[ (Y - \x^\top \w)^2 \right]$. Also, the expectations $\E_{X}$ and $\E_{Y|X}$ can be elaborated as $\E_{X} f(X) = \int_{\mathcal{X}} p^*(x) f(x) dx$ and $E_{Y|X} f(Y) = \int_{\mathcal{Y}} p^*(y|x) f(y) dy$
+(5 points).
+}
+
+\begin{align*}
+	\E\left[ (Y - \x^\top \w)^2 \right] &= \E_{\x}\E_{Y|{\x}}\left[ (Y - \x^\top \w)^2 \right]\\
+	&=\int_{\mathcal{X}} p^*(x) \int_{\mathcal{Y}} p^*(y|x) (y - x^\top \w)^2 dy dx\\
+	&=\int_{\mathcal{X}} p^*(x) \int_{\mathcal{Y}} p^*(y|x) y^2 - 2yx^\top\w + \w^\top xx^\top \w dy dx\\
+	&=\int_{\mathcal{X}} p^*(x) \left[\E_{Y|\x}\left[Y^2\right] -2\E_{Y|\x}\left[Y\right]\x^\top\w+ \w^\top xx^\top \w \right]dx\\
+	&=\int_{\mathcal{X}} p^*(x) \left[\E_{Y|\x}\left[Y\right]^2 -2\E_{Y|\x}\left[Y\right]\x^\top\w+ \w^\top xx^\top \w \right]dx \text{ $Y$ is independent given \x}\\
+	&=\int_{\mathcal{X}} p^*(x) \left( \E_{Y|{\x}}\left[ Y\right] - \x^\top\w \right)^2 dx\\
+	&=\E_{\x}\left[ \left( \E_{Y|{\x}}\left[ Y\right] - \x^\top\w \right)^2 \right]
+\end{align*}
+
+
+
+
+%\vspace{1cm}
+
+\section{\normalsize 
+Objective functions serve many purposes. They bring specificity to the problem formulation, provide a criteria for evaluation and can be used as a basis for deriving new algorithms. 
+Accordingly, the same problem may have different associated objectives.
+For example, the sample MSE is widely used to evaluate the performance of a learning method, but not all methods ensue from MSE.
+Consider the following objective $\on{MSE}_{\on L2}$, which is a slight modification to MSE: $\on{MSE}_{\on L2}(\w) = \E\left[ \left( Y - \x^\top \w \right)^2 + \lambda \w^\top \w \right]$.
+Derive the following method know as ridge regression from $\on{MSE}_{\on L2}$
+(5 points).
+}
+\begin{align}
+\w^{\on{RR}}_{t+1} = \left( \frac{1}{t} \sum_{k=1}^t \x_k \x_k^\top + \lambda {\bf I} \right)^{-1} \left( \frac{1}{t} \sum_{k=1}^t \x_k Y_k \right), \text{ where $\bf I$ is the identity matrix}.
+\end{align}
+
+\begin{align*}
+	&\on{MSE}_{\on L2}(\w) = \E\left[ Y^2 -2Y\x^\top\w + \w^\top \x\x^\top \w + \lambda \w^\top \w \right]\\
+	&\rightarrow \nabla_{\w}\on{MSE}_{\on L2}(\w) = \E\left[-2\x Y + 2 \x\x^\top \w + 2\lambda \w \right]\\
+	&\text{set } \E\left[-2\x Y + 2 \x\x^\top \w + 2\lambda \w \right]=0\\
+	&\rightarrow \E\left[\x\x^\top +\lambda\bf{I} \right]\w = \E\left[\x Y\right]\\
+	&\rightarrow \w=\E\left[\x\x^\top +\lambda\bf{I} \right]^{-1}\E\left[\x Y\right]\\
+	&\text{approximate with samples}\\
+	&\rightarrow \w^{\on{RR}}_{t+1} = \left( \frac{1}{t} \sum_{k=1}^t \x_k \x_k^\top + \lambda {\bf I} \right)^{-1} \left( \frac{1}{t} \sum_{k=1}^t \x_k Y_k \right)
+\end{align*}
+
+
+
+\newpage
+
+\section{\normalsize 
+Relate the MSE objective for supervised regression to the cross-entropy objective: $\on{CE}(\w) = -\int_{\mathcal{X}} p^*(x) \int_{\mathcal{Y}} p^*(y|x) \log p_{\w}(y|x) dy dx$, where $p^*$ is the true distribution of $Y$ and $\x$, and $ p_{\w}$ is the estimated distribution.
+Use the fact that \\
+$\on{MSE}(\w) = \E\left[ \left(Y - \x^\top \w \right)^2 \right] = \int_{\mathcal{X}} p^*(x) \int_{\mathcal{Y}} p^*(y|x) (y - x^\top \w)^2  dy dx$.
+ (5 points).
+}
+
+\begin{align*}
+	%\text{If we assume in the CE objective that p is a gaussian distribution with a linear model, we can wright}\\
+	&\rightarrow p_\w(y|x) = \frac{1}{\sqrt{2\pi}\sigma}\exp\left(-\frac{(y-x^\top\w)^2}{2\sigma^2} \right)\\
+	&\rightarrow \log p_\w(y|x) = -\frac{(y-x^\top\w)^2}{2\sigma^2}-\log \sqrt{2\pi}\sigma\\
+	&\text{substitute}\\
+	&\rightarrow \on{CE}(\w) = -\int_{\mathcal{X}} p^*(x) \int_{\mathcal{Y}} p^*(y|x) \left( -\frac{(y-x^\top\w)^2}{2\sigma^2}-\log \sqrt{2\pi}\sigma\right) dy dx\\
+	&\rightarrow \on{CE}(\w) = \log \sqrt{2\pi}\sigma - \frac{1}{2\sigma^2}\int_{\mathcal{X}} p^*(x) \int_{\mathcal{Y}} p^*(y|x) \left( -(y-x^\top\w)^2\right) dy dx\\
+	&\text{The only difference is constant term}
+\end{align*}
+
+%\vspace{7cm}
+
+\section{\normalsize 
+We discussed how supervised and reinforcement learning problems are fundamentally different.
+Show how that difference impacts the choice of policy optimization objective in terms of cross entropy in the case of bandits.
+More specifically, formulate the policy optimization problem with a cross entropy objective, discuss the difference between this objective and the cross entropy objective for supervised regression defined above, and relate this difference to the fundamental difference between supervised and reinforcement learning problems
+ (5 points).
+}
+\begin{align*}
+	&\text{By definition, we could have:}\\
+	&\on{CE}(\pi_\theta, \pi^*) = -\int \pi_\theta(a) \log \pi^*(a)\, da\\
+	&\text{substitute with a Boltzman distribution}\\
+	&\pi^*(a) = Z^{-1} e^{q(a) \tau^{-1}}\\
+	&\log \pi^*(a) = \tau^{-1} q(a) - \log Z\\
+	&\text{substitue, the objective will be:}\\
+	&-\arg\min_\theta \int \pi_\theta(a) \log \pi^*(a)\, da \\
+	&= -\arg\min_\theta\int \pi_\theta(a)( \tau^{-1} q(a) - \log Z) \, da \\
+	&= -\arg\min_\theta \int \pi_\theta(a) q(a) \, da.
+\end{align*}
+The difference is ...
+
+\newpage
+\section{\normalsize 
+The expected policy gradient update for contextual bandit problem can be given as follows: $\E\left[ - \log \pi_\theta\left( A | X \right) R \right]$, where $X$ is a given context, $\pi_\theta$ is the parameterized policy distribution maintained by the agent, $A$ is the action chosen by the agent according to $\pi_\theta$, and $R$ is the subsequent reward.
+Show that this update can be derived by calculating the gradient of the cross entropy objective: $\on{CE}(\theta) = - \int_{\mathcal{X}} p(x) \int_{\mathcal{A}} \pi_\theta(a|x) \log \pi^*(a|x) da dx  $, where $p$, which is not a function of $\theta$, is the distribution of context $X$. Also, $\pi^*$ is the ideal policy distribution defined as the Boltzmann distribution $\pi^*(a|x) = Z^{-1} e^{q(x,a) \tau^{-1}}$, where $q(x,a) = \E\left[ R | A = a, X = x \right]$ is the contextual action value.
+ (10 points).
+}
+
+\begin{align*}
+	&\text{Bolzman distribution again}\\
+	&\pi^*(a|x) = Z^{-1} e^{q(x, a) \tau^{-1}}\\
+	&\log \pi^*(a|x) = \tau^{-1} q(x, a) - \log Z\\
+	&\on{CE}(\theta) = - \int_{\mathcal{X}} p(x) \int_{\mathcal{A}} \pi_\theta(a|x) \left(\tau^{-1} q(x, a) - \log Z\right) da dx \\
+	&\on{CE}(\theta) = \log Z - \tau^{-1}\int_{\mathcal{X}} p(x) \int_{\mathcal{A}} \pi_\theta(a|x) q(x, a) da dx \\
+	&\nabla_{\theta}\on{CE}(\theta) = - \tau^{-1}\int_{\mathcal{X}} p(x) \int_{\mathcal{A}} \nabla_{\theta}\pi_\theta(a|x) q(x, a) da dx \\
+	&\nabla_{\theta}\on{CE}(\theta) = - \tau^{-1}\int_{\mathcal{X}} p(x) \int_{\mathcal{A}} \pi_\theta(a|x)\frac{\nabla_{\theta}\pi_\theta(a|x)}{\pi_\theta(a|x)}\nabla_{\theta}\pi_\theta(a|x) q(x, a) da dx \\
+	&\nabla_{\theta}\on{CE}(\theta) = - \tau^{-1}\int_{\mathcal{X}} p(x) \int_{\mathcal{A}} \pi_\theta(a|x)\nabla_{\theta}\log \pi_\theta(a|x) q(x, a) da dx \\
+	&\nabla_{\theta}\on{CE}(\theta) = - \tau^{-1}\int_{\mathcal{X}} p(x)  \E\left[\nabla_{\theta}\log \pi_\theta(A|x) q(x, A)\right] dx \\
+	&\nabla_{\theta}\on{CE}(\theta) = - \tau^{-1}  \E\left[\nabla_{\theta}\log \pi_\theta(A|X) q(X, A)\right]\\
+	&\nabla_{\theta}\on{CE}(\theta) = \tau^{-1}  \E\left[-\nabla_{\theta}\log \pi_\theta(A|X) R\right]\\
+	&\text{ignore the constant term, they now have identical term}
+\end{align*}
+
+\newpage
+
+\section{\normalsize 
+We wrote a PyTorch code for a discrete action bandit problem.
+Consider a continuous action bandit problem, where actions are distributed normally: $A \sim N(\mu, \sigma^2)$, and the reward is a quadratic function of the action: $R = - \left( A - 10 \right)^2$. What is the optimal policy in terms of mean $\mu$ and standard deviation $\sigma$ (5 points)?
+Write a PyTorch code for learning the mean and the standard deviation using policy gradient.
+Attach the code here together with the curve for estimated mean and standard deviation over time for 100K time steps.
+The code should run without error in colab and bring the plots.
+ (15 points, total 20).
+}
+
+\newpage
+\section{\normalsize 
+For discrete MDP, Derive the following Bellman equation for action value function from its definition: $q_\pi(s,a) = \E\left[ G_t | S_t = s, A_t = a, A_k \sim \pi, \forall k > t \right]$, where $S_t$ is the state at $t$, $A_t$ is the action at $t$, $G_t$ is the return after $t$, $\pi$ is the policy, $\gamma$ is the discount factor, $r(s,a) = \sum_r r  \sum_{s'} p(s', r | s, a)$ and $p_\pi(s', a'|s, a) = \sum_r p(s', r| s, a)\pi(a'|s')$
+ (5 points).
+}
+\begin{align}
+q_\pi(s, a) = r(s, a) + \gamma \sum_{s', a'} p_\pi(s', a'|s, a) q_\pi(s', a').
+\end{align}
+
+\vspace{7cm}
+\section{\normalsize 
+Write the above Bellman equation in matrix form
+ (5 points).
+}
+
+\newpage
+
+\section{\normalsize 
+Consider a policy $\pi$ that is not optimal, that is $v_\pi(s) < v_{\pi^*}(s), \exists s$. Also consider the greedy-policy operator $g$ that gives a policy $gq$ which is greedy with respect to a given function $q$, that is, $(g q)(s) = \arg\max_b q(s, b)$, assuming there is no tie. Show that, $v_{gq_\pi}(s) > v_\pi(s), \exists s$
+ (5 points).
+}
+\vspace{8cm}
+
+\section{\normalsize 
+As we have seen, the action value iteration method can be written as: $\q_{k+1} = \q_k - \alpha \left( \left({\bf I} - \gamma \bP_{g\q_k}  \right)\q_k - \br \right)$, where $\q$ is the estimate of action value in vector form, and the vector $\br$ contains $\left[ \br \right]_{sa} = r(s,a)$ for different $s,a$. Also, the matrix $\bP_{g \q_k}$ contains state-action-transition probabilities, $\left[ \bP_{g\q_k} \right]_{sa, s'a'} = p(s'|s, a) (g \q_k)(a'|s')$, where next actions are taken under policy $g \q_k$, which is the greedy policy with respect to $\q_k$.
+Find the condition under which the action-value iteration method converges, and convince that the condition is satisfied in general.
+ (5 points).
+}
+
+\newpage
+
+\section{\normalsize 
+Write the following state-value iteration method in matrix form: \\
+$v_{k+1}(s) = v_k(s) + \alpha\left( \max_b \left[ r(s, b) + \gamma \sum_{s'} p(s'|s, b) v_{k}(s') \right] - v_k(s) \right)$
+ (5 points).
+}
+
+\vspace{8cm}
+
+\section{\normalsize 
+Consider the two-state MDP example from lecture, where $\gamma=0.9$, reward $r(s,a)$ is 1 for state 1 and action 1, and zero for all other state action pairs, and the state transition probabilities $p(s'|s,a)$ are as follows: $p(0|0,0) = p(1|0,1) = p(0|1,0) = p(1|1,1)=1$, and zero for any other transition.
+ (5 points). Now, consider a policy $\pi$ which takes action 0 at state 0 with probability 0.25 but takes the same action at state 1 with probability 0.75.
+ Find $r_\pi(s) = \sum_a \pi(a|s)r(s,a)$, $p_\pi(s'|s) = \sum_a \pi(a|s)p(s'|s,a)$, and $v_\pi(s)$ for all $s$ and $s'$.
+Mention the method you used for finding $v_\pi$ or show calculation.
+ (5 points).
+}
+
+\newpage
+\section{\normalsize 
+For the same MDP, find $q_\pi$, mention the method you used for finding $q_\pi$ or show calculation, and describe $g q_\pi$, that is the greedy policy over $q_\pi$ for the policy $\pi$ described in the previous question
+ (5 points).
+}
+
+\vspace{8cm}
+
+\section{\normalsize 
+Consider the nonlinear function approximator for supervised regression $Y \approx {\bf \theta}^\top \phi({\bf W}\x)$, where $Y$ is the target scalar output, $\x$ is the vector input, ${\bf \theta}$ is the output weight vector, $\bf W$ is the input weight matrix, and $\phi$ is the element-wise activation function for the hidden layer. Consider the activation function to be sigmoid.
+Show the backpropagation update for input weights for this case in matrix form.
+ (5 points).
+}
+
+
+\end{document}
+
+
+
+
+

@@ -1,0 +1,8 @@
+\BOOKMARK [1][-]{section.1}{Bellman Equation in Matrix Form}{}% 1
+\BOOKMARK [1][-]{section.2}{Policy Evaluation}{}% 2
+\BOOKMARK [1][-]{section.3}{Policy Iteration}{}% 3
+\BOOKMARK [1][-]{section.4}{Value Iteration}{}% 4
+\BOOKMARK [1][-]{section.5}{Unifying Continuing and Episodic Tasks}{}% 5
+\BOOKMARK [1][-]{section.6}{Programming Examples}{}% 6
+\BOOKMARK [2][-]{subsection.6.1}{Monte Carlo Simulation}{section.6}% 7
+\BOOKMARK [2][-]{subsection.6.2}{Solving a Linear System}{section.6}% 8

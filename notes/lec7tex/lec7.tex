@@ -201,11 +201,15 @@ $$
 A fundamental property of value functions is that it can be written in a recursive form:
 \begin{align*}
 v_\pi(s) &= E_\pi[G_t|S_t=s] \\
-&=  E_\pi[R_t + \gamma G_{t+1}|S_t=s] \\
-&= \sum_a \pi(a|s)\sum_{s'}\sum_{r}p(s', r| s,a)\Big[r+\gamma E_\pi[G_{t+1}|S_{t+1}=s'] \Big] \\
-&= \sum_a \pi(a|s)\sum_{s'}\sum_{r}p(s', r| s,a)\Big[r+\gamma v_\pi(s')] \Big], s \in \mathcal{S}
+&=  E_\pi[R_{t+1} + \gamma G_{t+1}|S_t=s] \\
+&= E_\pi[R_{t+1}] + \gamma E_\pi[G_{t+1}|S_t=s]\\
+&= E_\pi[R_{t+1}] + \gamma E_\pi\big[ E_\pi[G_{t+1}|S_{t+1}, S_t=s]|S_t=s \big]\\
+&= E_\pi[R_{t+1}] + \gamma E_\pi[v_\pi(S_{t+1})|S_t=s]\\
+&= \sum_r rp(r|s,\pi) + \gamma\sum_{s'}v_\pi(s')p(s'|s,\pi)\\
+&= \sum_{s',r}r\sum_a\pi(a|s)p(s',r|s,a) + \gamma\sum_{s',r}v_\pi(s')\sum_a\pi(a|s)p(s',r|s,a)\\
+&= \sum_a \pi(a|s)\sum_{s',r}p(s', r| s,a)\Big[r+\gamma v_\pi(s')] \Big], s \in \mathcal{S}
 \end{align*}
-
+where in the fourth step, we use property of Markov decision process and in the last step, we combine the common terms.
 \section{Optimal Values and Policies}
 
 For finite MDPs, the optimal state-value function $v_*$ is defined as:
@@ -219,37 +223,30 @@ $$
 
 A policy $\pi'$ is defined to be better than or equal to a policy $\pi$ if its expected return is greater than or equal to that of $\pi'$ for all states, which is $\pi' \ge \pi$ if and only if $v_{\pi'}(s) \ge v_\pi(s)$ for all $s \in \mathcal{S}$. There is always at least one policy that is better than or equal to all other policies, which is the optimal policy.
 
-\subsection{Greedification of Policies}
+\subsection{Bellman Optimality Equation}
 
-For any arbitrary policy $ \pi $, we can obtain an equal or better policy by greedification: $  \pi'(s) = \arg\max_a q_\pi(s,a) $.	
-If we use $g_\pi(s)$ and $ u_\pi(s) $ to denote the value function with and without greedification on $ \pi $:
+One way to obtain an improved policy $ \pi' $ is by greedification with current action-value function: $ \pi'(s)=\arg\max_a q_\pi(s,a) $. If we denote the action-value after greedification as $ g_\pi(s) $, we can prove it's better than or equal to current value function:
+
 \begin{align*}
-	g_\pi(s) &= \max_a q_\pi(s,a)\\
-	&= q_\pi(s, \pi'(s))\\
-	&= \sum_a \pi'(a|s) q_\pi(s,a)\\
-	u_\pi(s) &= \sum_a \pi(a|s) q_\pi(s,a)\\
-	g_\pi(s) &\ge u_\pi(s)
+g_\pi(s) &= \max_a q_\pi(s,a)\\
+&= q_\pi(s, \pi'(s))\\
+&= \sum_a \pi'(a|s) q_\pi(s,a)\\
+v_\pi(s) &= \sum_a \pi(a|s) q_\pi(s,a)\\
+g_\pi(s) &\ge v_\pi(s) = \sum_a \pi(a|s) q_\pi(s,a)\\
+v_{\pi'}(s) &\ge v_\pi(s)
 \end{align*}
 
-
-\subsection{Bellman Optimality Function}
-
-The Bellman optimality function for optimal values functions is: 
+The Bellman optimality equation can be derived in the following way:
 \begin{align*}
-v_*(s) &= \max_a E_{\pi_*}[G_t | S_t=s, A_t=a] \\
-&= \max_a E_{\pi_*}[R_{t+1} + \gamma G_{t+1} | S_t=s, A_t=a] \\
-&= \max_a E[R_{t+1} + \gamma v_*(S_{t+1}) | S_t=s, A_t=a] \\
-&= \max_a \sum_{s', r}p(s', r|s,a)[r+\gamma v_*(s')]
+q_\pi(s,a) &= \sum_{s',r}p(s', r|s,a)\Big[ r+ \gamma \sum_{a'} \pi(a'|s') q_\pi(s', a') \Big] \\
+q_*(s,a) &= \sum_{s',r}p(s', r|s,a)\Big[ r+ \gamma \sum_{a'} \pi^*(a'|s') q_*(s', a') \Big] \\
+&= \sum_{s',r}p(s', r|s,a)\Big[ r+ \gamma \max_b q_*(s', b) \Big]
 \end{align*}
-The Bellman optimality function for optimal action-values functions is:
-\begin{align*}
-q_*(s, a) &= E\Big[ R_{t+1} + \gamma q_*(S_{t+1}, a') \Big| S_t=s, A_t=a \Big] \\
-&= \sum_{s',r}p(s', r|s,a)\Big[ r+ \gamma\max_a' q_*(s', a') \Big]
-\end{align*}
+where in the second step, we substitute $ \pi $ with the optimal policy $ \pi^* $ because the optimal policy would still satisfy the Bellman equation and in the third step, we apply greedification to the optimal policy.
 
 \subsection{SGD to Estimate $v_\pi$}
 
-The objective function of mean squared error for estimating $ v_\pi $ is $E[(G_k - v)^2]$. The update rule for single sample SGD is $ v_{k+1} = v_k + 2\alpha(G_k - v_k) $, where $ k $ is the time step so far from the beginning.
+The objective function of mean squared error for estimating $ v_\pi $ is $E[(G_k - v)^2]$. The update rule for single sample SGD is $ v_{k+1} = v_k + 2\alpha(G_k - v_k) $, where $ k $ denotes a trial.
 
 
 \end{document}
