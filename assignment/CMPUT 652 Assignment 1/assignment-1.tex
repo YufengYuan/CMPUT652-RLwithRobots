@@ -27,6 +27,9 @@
 \newcommand{\bP}{{\bf P}}
 \newcommand{\on}{\operatorname}
 \newcommand{\E}{\on{E} }
+\newcommand{\vpi}{\mathbf{v}_{\pi}}
+\newcommand{\rpi}{\mathbf{r}_{\pi}}
+\newcommand{\Ppi}{\mathbf{P}_{\pi}}
 
 \title{Assignment 1 for CMPUT 652 RL with Robots}
 
@@ -219,11 +222,57 @@ For discrete MDP, Derive the following Bellman equation for action value functio
 q_\pi(s, a) = r(s, a) + \gamma \sum_{s', a'} p_\pi(s', a'|s, a) q_\pi(s', a').
 \end{align}
 
-\vspace{7cm}
+\begin{align*}
+	q_\pi(s,a) &= \E\left[ G_t | S_t = s, A_t = a, A_k \sim \pi, \forall k > t \right]\\
+	&=\E_{\pi}\left[ G_t | S_t = s, A_t = a \right]\\
+	&=\E_{\pi}\left[ R_t+\gamma G_{t+1} | S_t = s, A_t = a \right]\\
+	&=\E\left[ R_t | S_t = s, A_t = a \right] +\gamma\E_{\pi}\left[ G_{t+1} | S_t = s, A_t = a \right]\\
+	&=\sum_r r  \sum_{s'} p(s', r | s, a) + \gamma\E\left[ \E_{\pi}\left[G_{t+1}|S_{t+1}, A_{t+1}\right] | S_t = s, A_t = a \right]\\
+	&=r(s,a) + \gamma\E\left[ q_\pi(S_{t+1}, A_{t+1})| S_t = s, A_t = a \right]\\
+	&=r(s,a) + \gamma\sum_{s',a'}\sum_r p(s', r| s, a)\pi(a'|s')q_\pi(s',a')\\
+	&=r(s,a) + \gamma\sum_{s',a'}p_\pi(s', a'|s, a)q_\pi(s',a')\\
+\end{align*}
+
+
+%\vspace{7cm}
 \section{\normalsize 
 Write the above Bellman equation in matrix form
  (5 points).
 }
+
+\begin{align*}
+	v_{\pi}(s) &= \sum_{a}{\pi(a|s)\sum_{s',r}{p(s',r|s,a)\big(r + \gamma v_{\pi}(s')\big)}}\\
+	&= \sum_{a}{\pi(a|s)\sum_{s',r}{p(s',r|s,a)r}} + \gamma\sum_{a}{\pi(a|s)\sum_{s',r}{p(s',r|s,a)v_{\pi}(s')}}\\
+	&= \sum_{a}{\pi(a|s)r(s,a)} + \gamma\sum_{s'}{\Big[\sum_{a}{\pi(a|s)p(s'|s,a)}\Big]v_{\pi}(s')}\\
+	&= r_{\pi}(s) + \gamma \sum_{s'}{p_{\pi}(s'|s)v_{\pi}(s')}
+\end{align*}
+\begin{equation*}
+\begin{bmatrix}
+v_{\pi}(s_0) \\
+v_{\pi}(s_1) \\
+\vdots
+\end{bmatrix}
+=
+\begin{bmatrix}
+r_{\pi}(s_0) \\
+r_{\pi}(s_1) \\
+\vdots
+\end{bmatrix}
++ \gamma
+\begin{bmatrix}
+p_{\pi}(s_0|s_0) & p_{\pi}(s_1|s_0) & \dots \\
+p_{\pi}(s_0|s_1) & p_{\pi}(s_1|s_1) & \dots \\
+\vdots & \vdots & \ddots
+\end{bmatrix}
+\begin{bmatrix}
+v_{\pi}(s_0) \\
+v_{\pi}(s_1) \\
+\vdots
+\end{bmatrix}
+\end{equation*}
+\begin{equation*}
+\vpi = \rpi + \gamma \Ppi \vpi
+\end{equation*}
 
 \newpage
 
@@ -231,6 +280,18 @@ Write the above Bellman equation in matrix form
 Consider a policy $\pi$ that is not optimal, that is $v_\pi(s) < v_{\pi^*}(s), \exists s$. Also consider the greedy-policy operator $g$ that gives a policy $gq$ which is greedy with respect to a given function $q$, that is, $(g q)(s) = \arg\max_b q(s, b)$, assuming there is no tie. Show that, $v_{gq_\pi}(s) > v_\pi(s), \exists s$
  (5 points).
 }
+
+\begin{align*}
+	v_\pi(s) &= \sum_a\pi(a|s)q_\pi(s,a)\\
+	v_{gq_\pi}(s) &=\sum_a gq_{\pi}(a|s)q_\pi(s,a)\\
+	&=q_\pi(s, \arg\max_bq_\pi(s,b))\\
+	&=\max_a q_\pi(s,a)\\
+	v_{gq_\pi}(s) =\max_a q_\pi(s,a) &\ge v_\pi(s) = \sum_a\pi(a|s)q_\pi(s,a), \forall s \\
+	\text{The condition of equality under all states is that optimal policy, contradict}\\
+	&v_{gq_\pi}(s) > v_\pi(s), \exists s
+\end{align*}
+
+
 \vspace{8cm}
 
 \section{\normalsize 
