@@ -393,9 +393,9 @@ Find the condition under which the action-value iteration method converges, and 
 
 \begin{align*}
 	\q_{k+1} &= \q_k - \alpha \left( \left({\bf I} - \gamma \bP_{g\q_k}  \right)\q_k - \br \right) \\
-	&= \q_k, -\alpha\bf{I}\q_k - \alpha \gamma \bP_{g\q_k}\q_k -\alpha r\\
-	&=\left(\bf{I} - \alpha\bf{I} - \alpha\gamma\bP_{g\q_k} \right)\q_k - \alpha r\\
-	&\text{denote $A_k$ as $\left(\bf{I} - \alpha\bf{I} - \alpha\gamma\bP_{g\q_k} \right)$ and $b$ as $ \alpha r $ }\\
+	&= \q_k -\alpha\bf{I}\q_k + \alpha \gamma \bP_{g\q_k}\q_k -\alpha r\\
+	&=\left(\bf{I} - \alpha\bf{I} + \alpha\gamma\bP_{g\q_k} \right)\q_k - \alpha r\\
+	&\text{denote $A_k$ as $\left(\bf{I} - \alpha\bf{I} + \alpha\gamma\bP_{g\q_k} \right)$ and $b$ as $ \alpha r $ }\\
 	&=A_k \q_k -b\\
 	&=A_k(A_{k-1}\q_{k-1} - b) -b\\
 	&=A_kA_{k-1}\q_{k-1} - A_kb - b\\
@@ -403,7 +403,7 @@ Find the condition under which the action-value iteration method converges, and 
 	&=\prod_{t=0}^kA_t\q_0 - \sum_{t=0}^k \left[\prod_{j=i}^k A_j\right] b - b
 \end{align*}
 {\sol
-The condition for convergence is $\lim_{k\to +\infty} \prod_{t=0}^k A_t \to \bf{0} $, which requires $\rho(A_t)=\rho(\bf{I} - \alpha\bf{I} - \alpha\gamma\bP_{g\q_t}) < 1, \forall t\in T$, where $\rho$ is the spectral radius. Next, we argue that this condition is satisfied in general. The above condition equals to $\rho\big(\alpha(\bf{I} - \gamma\bP_{g\q_t})\big) >0, \forall t \in T$ as the eigenvalue of $\bf{I}$ is 1. Based on the fact that $\bP_{g\q_t}$ is a Markov matrix whose eigenvalues are all less than or equal to 1, the condition required for $\rho\big(\alpha(\bf{I} - \gamma\bP_{g\q_t})\big) >0, \forall t \in T$ is $ \gamma < 1 $ and $ \gamma < 1 $ is usually satisfied in general.
+The condition for convergence is $\lim_{k\to +\infty} \prod_{t=0}^k A_t \to \bf{0} $, which requires $\rho(A_t)=\rho(\bf{I} - \alpha\bf{I} + \alpha\gamma\bP_{g\q_t}) < 1, \forall t\in T$, where $\rho$ is the spectral radius. Next, we argue that this condition is satisfied in general. The above condition equals to $\rho(\alpha\gamma\bP_{g\q_t}) < \alpha, \forall t \in T$ as the eigenvalue of $\bf{I}$ is 1. Based on the fact that $\bP_{g\q_t}$ is a Markov matrix whose largest eigenvalue is 1, the condition required for $\rho(\alpha\gamma\bP_{g\q_t}) < \alpha, \forall t \in T$ is $ \gamma < 1 $ and $ \gamma < 1 $ is usually satisfied in general.
 
 }
 \en
