@@ -4,6 +4,8 @@
 \usepackage{amsmath}
 \usepackage{amssymb}
 \usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
 \hypersetup{
     colorlinks=true,
     linkcolor=blue,
@@ -97,14 +99,40 @@ Stochastic Gradient Descent can be obtained from approximate the exact gradient 
 According to the strong law of large numbers, sample mean is a consistent estimator of the expected value (See Lemma 3, pg 18, of \href{https://era.library.ualberta.ca/files/cbc386j54q/Mahmood_Ashique_201709_PhD.pdf}{Mahmood 2017}). Use this fact to argue that the sample MSE $\frac{1}{t} \sum_{k=1}^t \left( Y_k - \x_k^\top\w \right)^2$ objective is a consistent estimator of MSE (5 points).
 }
 
+\begin{align*}
+\E\left[ \left( Y - \x^\top\w \right)^2 \right] &= \E \left[ Y^2  - 2\w^\top\x Y + \w^\top\x\x^\top\w\right] \\
+&= \E\left[Y^2\right]  - 2\w^\top\E\left[\x Y \right] + \w^\top\E\left[\x\x^\top \right]\w\\
+\frac{1}{t} \sum_{k=1}^t \left( Y_k - \x_k^\top\w \right)^2 &=\frac{1}{t} \sum_{k=1}^t \left(Y_k^2  - 2\w^\top\x_k Y_k + \w^\top\x_k\x_k^\top\w\right)\\
+&=\frac{1}{t} \sum_{k=1}^t Y_k^2 - 2\w^\top\frac{1}{t} \sum_{k=1}^t \x_k Y_k +\w^\top\frac{1}{t} \sum_{k=1}^t(\x_k\x_k^\top) \w
+\end{align*}
+{\sol
+From above, the three terms of sample mean in sample MSE are consistent estimators of the three terms of expected value in MSE. Based on the fact that the sum of consistent estimators is still consistent, the sample MSE objective is a consistent estimator of MSE.
+	
+}
+\en
 
 
-\vspace{8.5cm}
+\vspace{1cm}
 
 \section{\normalsize 
 Similarly, argue that LS is a consistent estimator of the solution to MSE (5 points).
 }
 
+{\sol
+From Q1, we can directly write out the form of solutions obtained from MSE and LS:
+
+}
+\en
+\begin{align*}
+	\w^{\on{MSE}} &= \E\left[\x\x^\top\right]^{-1}\E\left[\x Y\right]\\
+	\w^{\on{LS}}_{t+1} &= \left( \frac{1}{t} \sum_{k=1}^t \x_k \x_k^\top \right)^{-1} \left( \frac{1}{t} \sum_{k=1}^t \x_k Y_k \right)
+\end{align*}
+
+{\sol
+From above, the two terms of sample mean from LS are consistent estimators of the two terms of expected value from MSE. Based on the fact, the multiplication of consistent estimators is still consistent, LS is a consistent estimator of the solution of MSE.
+
+}
+\en
 \newpage
 
 \section{\normalsize 
@@ -254,6 +282,20 @@ The code should run without error in colab and bring the plots.
  (15 points, total 20).
 }
 
+{\sol
+Optimal policy of of mean $ \mu $ is 10 and standard deviation $ \sigma $ is 0.
+
+}
+\en
+\vspace{1cm}
+\lstinputlisting[language=python, basicstyle=\tiny]{pg.py}
+
+\begin{figure*}[!htp]
+	\centering
+	\includegraphics[scale=0.5]{mu_and_sigma.png}
+\end{figure*}
+
+
 \newpage
 \section{\normalsize 
 For discrete MDP, Derive the following Bellman equation for action value function from its definition: $q_\pi(s,a) = \E\left[ G_t | S_t = s, A_t = a, A_k \sim \pi, \forall k > t \right]$, where $S_t$ is the state at $t$, $A_t$ is the action at $t$, $G_t$ is the return after $t$, $\pi$ is the policy, $\gamma$ is the discount factor, $r(s,a) = \sum_r r  \sum_{s'} p(s', r | s, a)$ and $p_\pi(s', a'|s, a) = \sum_r p(s', r| s, a)\pi(a'|s')$
@@ -349,6 +391,24 @@ Find the condition under which the action-value iteration method converges, and 
  (5 points).
 }
 
+\begin{align*}
+	\q_{k+1} &= \q_k - \alpha \left( \left({\bf I} - \gamma \bP_{g\q_k}  \right)\q_k - \br \right) \\
+	&= \q_k, -\alpha\bf{I}\q_k - \alpha \gamma \bP_{g\q_k}\q_k -\alpha r\\
+	&=\left(\bf{I} - \alpha\bf{I} - \alpha\gamma\bP_{g\q_k} \right)\q_k - \alpha r\\
+	&\text{denote $A_k$ as $\left(\bf{I} - \alpha\bf{I} - \alpha\gamma\bP_{g\q_k} \right)$ and $b$ as $ \alpha r $ }\\
+	&=A_k \q_k -b\\
+	&=A_k(A_{k-1}\q_{k-1} - b) -b\\
+	&=A_kA_{k-1}\q_{k-1} - A_kb - b\\
+	&\cdots\\
+	&=\prod_{t=0}^kA_t\q_0 - \sum_{t=0}^k \left[\prod_{j=i}^k A_j\right] b - b
+\end{align*}
+{\sol
+The condition for convergence is $\lim_{k\to +\infty} \prod_{t=0}^k A_t \to \bf{0} $, which requires $\rho(A_t)=\rho(\bf{I} - \alpha\bf{I} - \alpha\gamma\bP_{g\q_t}) < 1, \forall t\in T$, where $\rho$ is the spectral radius. Next, we argue that this condition is satisfied in general. The above condition equals to $\rho\big(\alpha(\bf{I} - \gamma\bP_{g\q_t})\big) >0, \forall t \in T$ as the eigenvalue of $\bf{I}$ is 1. Based on the fact that $\bP_{g\q_t}$ is a Markov matrix whose eigenvalues are all less than or equal to 1, the condition required for $\rho\big(\alpha(\bf{I} - \gamma\bP_{g\q_t})\big) >0, \forall t \in T$ is $ \gamma < 1 $ and $ \gamma < 1 $ is usually satisfied in general.
+
+}
+\en
+
+
 \newpage
 
 \section{\normalsize 
@@ -357,7 +417,43 @@ $v_{k+1}(s) = v_k(s) + \alpha\left( \max_b \left[ r(s, b) + \gamma \sum_{s'} p(s
  (5 points).
 }
 
-\vspace{8cm}
+\begin{align*}
+	v_{k+1}(s) &= v_k(s) + \alpha\left( \max_b \left[ r(s, b) + \gamma \sum_{s'} p(s'|s, b) v_{k}(s') \right] - v_k(s) \right)\\
+	&= (1-\alpha) v_k(s) + \alpha\left( \max_b \left[ r(s, b) + \gamma \sum_{s'} p(s'|s, b) v_{k}(s') \right] \right)\\
+	&= (1-\alpha) v_k(s) + \alpha \max_b \left( q_k(s,b) \right) \\
+	&= (1-\alpha) v_k(s) + \alpha \bP_{gq_k} q_k(s,b) \\
+\end{align*}
+
+\begin{equation*}
+	v_{k+1}(s)= (1-\alpha) v_k(s) + \alpha \bP_{gq_k} q_k(s,b)
+\end{equation*}
+
+\begin{equation*}
+\begin{bmatrix}
+v_{k+1}(s_0) \\
+v_{k+1}(s_1) \\
+\vdots
+\end{bmatrix}
+= (1-\alpha)
+\begin{bmatrix}
+v_{k}(s_0) \\
+v_{k}(s_1) \\
+\vdots
+\end{bmatrix}
++ \alpha
+\begin{bmatrix}
+p_{gq_k}(s_0, a_0|s_0) & p_{gq_k}(s_0, a_1|s_0) & \dots \\
+p_{gq_k}(s_0, a_0|s_1) & p_{gq_k}(s_0, a_1|s_1) & \dots \\
+\vdots & \vdots & \ddots
+\end{bmatrix}
+\begin{bmatrix}
+q_{k}(s_0, a_0) \\
+q_{k}(s_0, a_1) \\
+\vdots
+\end{bmatrix}
+\end{equation*}
+
+%\vspace{8cm}
 
 \section{\normalsize 
 Consider the two-state MDP example from lecture, where $\gamma=0.9$, reward $r(s,a)$ is 1 for state 1 and action 1, and zero for all other state action pairs, and the state transition probabilities $p(s'|s,a)$ are as follows: $p(0|0,0) = p(1|0,1) = p(0|1,0) = p(1|1,1)=1$, and zero for any other transition.
