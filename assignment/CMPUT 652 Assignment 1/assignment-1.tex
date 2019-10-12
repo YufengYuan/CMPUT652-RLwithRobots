@@ -100,16 +100,18 @@ According to the strong law of large numbers, sample mean is a consistent estima
 }
 
 \begin{align*}
-\E\left[ \left( Y - \x^\top\w \right)^2 \right] &= \E \left[ Y^2  - 2\w^\top\x Y + \w^\top\x\x^\top\w\right] \\
-&= \E\left[Y^2\right]  - 2\w^\top\E\left[\x Y \right] + \w^\top\E\left[\x\x^\top \right]\w\\
-\frac{1}{t} \sum_{k=1}^t \left( Y_k - \x_k^\top\w \right)^2 &=\frac{1}{t} \sum_{k=1}^t \left(Y_k^2  - 2\w^\top\x_k Y_k + \w^\top\x_k\x_k^\top\w\right)\\
-&=\frac{1}{t} \sum_{k=1}^t Y_k^2 - 2\w^\top\frac{1}{t} \sum_{k=1}^t \x_k Y_k +\w^\top\frac{1}{t} \sum_{k=1}^t(\x_k\x_k^\top) \w
+&\lim_{t\to\infty}\E\left[\E\left[ \left( Y - \x^\top\w \right)^2 \right] - \frac{1}{t} \sum_{k=1}^t \left( Y_k - \x_k^\top\w \right)^2\right] \\
+&= \lim_{t\to\infty}\E\left[\E \left[ Y^2  - 2\w^\top\x Y + \w^\top\x\x^\top\w\right] - \frac{1}{t} \sum_{k=1}^t \left(Y_k^2  - 2\w^\top\x_k Y_k + \w^\top\x_k\x_k^\top\w\right) \right] \\
+&= \lim_{t\to\infty}\E\left[
+\E\left[Y^2\right] - \frac{1}{t} \sum_{k=1}^t Y_k^2 
+- 2\w^\top\E\left[\x Y \right] + 2\w^\top\frac{1}{t} \sum_{k=1}^t \x_k Y_k + 
+\w^\top\E\left[\x\x^\top \right]\w - \w^\top\frac{1}{t} \sum_{k=1}^t(\x_k\x_k^\top)
+\right]\\
+&=\lim_{t\to\infty}\E\left[ \E\left[Y^2\right] - \frac{1}{t} \sum_{k=1}^t Y_k^2 \right] + 
+\lim_{t\to\infty}\E\left[ 2\w^\top\frac{1}{t} \sum_{k=1}^t \x_k Y_k - 2\w^\top\E\left[\x Y \right] \right] + 
+\lim_{t\to\infty}\E\left[ \w^\top\E\left[\x\x^\top \right]\w - \w^\top\frac{1}{t} \right]\\
+&=0
 \end{align*}
-{\sol
-From above, the three terms of sample mean in sample MSE are consistent estimators of the three terms of expected value in MSE. Based on the fact that the sum of consistent estimators is still consistent, the sample MSE objective is a consistent estimator of MSE.
-	
-}
-\en
 
 
 \vspace{1cm}
@@ -124,15 +126,13 @@ From Q1, we can directly write out the form of solutions obtained from MSE and L
 }
 \en
 \begin{align*}
-	\w^{\on{MSE}} &= \E\left[\x\x^\top\right]^{-1}\E\left[\x Y\right]\\
-	\w^{\on{LS}}_{t+1} &= \left( \frac{1}{t} \sum_{k=1}^t \x_k \x_k^\top \right)^{-1} \left( \frac{1}{t} \sum_{k=1}^t \x_k Y_k \right)
+	\lim_{t\to\infty}\E\left[\frac{	\w^{\on{MSE}}}{\w^{\on{LS}}_{t+1}} \right]
+	&=\lim_{t\to\infty}\E\left[\frac{\E\left[\x\x^\top\right]^{-1}\E\left[\x Y\right]}{\left( \frac{1}{t} \sum_{k=1}^t \x_k \x_k^\top \right)^{-1} \left( \frac{1}{t} \sum_{k=1}^t \x_k Y_k \right)}\right]\\
+	&=\lim_{t\to\infty}\E\left[ \frac{\E\left[\x\x^\top\right]^{-1}}{\frac{1}{t} \sum_{k=1}^t \x_k \x_k^\top}\right] 
+	\lim_{t\to\infty}\E\left[ \frac{\E\left[\x Y\right]}{ \frac{1}{t} \sum_{k=1}^t \x_k Y_k }\right]\\
+	&= 1
 \end{align*}
 
-{\sol
-From above, the two terms of sample mean from LS are consistent estimators of the two terms of expected value from MSE. Based on the fact, the multiplication of consistent estimators is still consistent, LS is a consistent estimator of the solution of MSE.
-
-}
-\en
 \newpage
 
 \section{\normalsize 
@@ -208,7 +208,7 @@ If we insert $\log p_\w(y|x)$ in the CE objective, it will have the same form as
 \en
 \begin{align*}	
 	\on{CE}(\w) &= -\int_{\mathcal{X}} p^*(x) \int_{\mathcal{Y}} p^*(y|x) \left( -\frac{(y-x^\top\w)^2}{2\sigma^2}-\log \sqrt{2\pi}\sigma\right) dy dx\\
-	\on{CE}(\w) &= \log \sqrt{2\pi}\sigma - \frac{1}{2\sigma^2}\int_{\mathcal{X}} p^*(x) \int_{\mathcal{Y}} p^*(y|x) \left( -(y-x^\top\w)^2\right) dy dx\\
+	&= \log \sqrt{2\pi}\sigma + \frac{1}{2\sigma^2}\int_{\mathcal{X}} p^*(x) \int_{\mathcal{Y}} p^*(y|x) (y-x^\top\w)^2 dy dx\\
 \end{align*}
 
 %\vspace{7cm}
@@ -220,7 +220,7 @@ More specifically, formulate the policy optimization problem with a cross entrop
  (5 points).
 }
 {\sol
-To build the objective, we can use a Cross Entropy objective of the following form: $\on{CE}(\pi_\theta, \pi^*) = -\int_\mathcal{A} \pi_\theta(a) \log \pi^*(a)\, da$, where $ \pi_\theta, \pi^* $ are current policy and optimal policy respectively. The relationship can be established with a Boltzman distribution $Z^{-1} e^{q(a) \tau^{-1}}$, where$Z$ is a normalizing constant and $\tau$ is called the \textit{temperature}, which controls the entropy of the distribution. In this case, the objective can be written as:
+To build the objective, we can use a Cross Entropy objective of the following form: $\on{CE}(\pi_\theta, \pi^*) = -\int_\mathcal{A} \pi_\theta(a) \log \pi^*(a)\, da$, where $ \pi_\theta, \pi^* $ are current policy and optimal policy respectively. The relationship can be established with a Boltzman distribution $Z^{-1} e^{q(a) \tau^{-1}}$, where $Z$ is a normalizing constant and $\tau$ is called the \textit{temperature}, which controls the entropy of the distribution. In this case, the objective can be written as:
 
 }
 \en
@@ -231,7 +231,7 @@ To build the objective, we can use a Cross Entropy objective of the following fo
 	&= -\arg\min_\theta \int_\mathcal{A} \pi_\theta(a) q(a) \, da
 \end{align*}
 {\sol
-The difference is xxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx
+The fundamental difference between supervised learning and reinforcement learning implied here is where the optimal target(policy) distribution is known. In supervised learning, the optimal distribution is given as the label, however, in reinforcement learning, the reward only tells the agent how good an action instead of whether the action is optimal or not. Such difference makes reinforcement learning inherently difficult than supervised learning.
 
 }
 \en
@@ -283,7 +283,7 @@ The code should run without error in colab and bring the plots.
 }
 
 {\sol
-Optimal policy of of mean $ \mu $ is 10 and standard deviation $ \sigma $ is 0.
+Optimal policy of mean $ \mu $ is 10 and standard deviation $ \sigma $ is 0.
 
 }
 \en
@@ -372,15 +372,15 @@ Consider a policy $\pi$ that is not optimal, that is $v_\pi(s) < v_{\pi^*}(s), \
 	v_{gq_\pi}(s) &=\sum_a gq_{\pi}(a|s)q_\pi(s,a)\\
 	&=q_\pi(s, \arg\max_bq_\pi(s,b))\\
 	&=\max_a q_\pi(s,a)\\
-	v_{gq_\pi}(s) =\max_a q_\pi(s,a) &\ge v_\pi(s) = \sum_a\pi(a|s)q_\pi(s,a), \forall s
+	v_{gq_\pi}(s) =\max_a q_\pi(s,a) &\ge v_\pi(s) = \sum_a\pi(a|s)q_\pi(s,a), \forall s \in \mathcal{S}
 \end{align*}
 {\sol
-The condition of equality under all states is that optimal policy, contradict
+The condition of equality of the above formula is that the policy is optimal, however, given the fact that policy $\pi$ is not optimal, we have:
 
 }
 \en
 $$
-v_{gq_\pi}(s) > v_\pi(s), \exists s
+v_{gq_\pi}(s) > v_\pi(s), \exists s \in \mathcal{S}
 $$
 
 %\vspace{8cm}
@@ -477,7 +477,7 @@ Mention the method you used for finding $v_\pi$ or show calculation.
 \end{align*}
 
 {\sol
-with $p$ and $r$, we can write $v_\pi$ in the matrix form $\vpi = \rpi + \gamma \Ppi \vpi$ and solve the linear system to obtain $v_\pi$:
+With $p$ and $r$, we can write $v_\pi$ in the matrix form $\vpi = \rpi + \gamma \Ppi \vpi$ and solve the linear system to obtain $v_\pi$:
 
 }
 \en
@@ -504,7 +504,7 @@ v_{\pi}(1) \\
 \end{equation*}
 
 {\sol
-	solve $\vpi = (\bf{I}-\gamma\Ppi)^{-1}\vpi$, we have $v_\pi(0) \approx 1.16, v_\pi(1) \approx 1.34$
+	Since $ \bf{I}-\gamma\Ppi $ is invertible, we can get the exact the solution: $\vpi = (\bf{I}-\gamma\Ppi)^{-1}\vpi$, we have $v_\pi(0) \approx 1.16, v_\pi(1) \approx 1.34$.
 	
 }
 \en
@@ -515,7 +515,11 @@ For the same MDP, find $q_\pi$, mention the method you used for finding $q_\pi$ 
  (5 points).
 }
 
-\qquad Similar to Q16, we can obtain the matrix form of $ q_\pi $ and solve the linear system
+{\sol
+	Similar to Q16, we can obtain the matrix form of $ q_\pi $ and solve the linear system:
+	
+}
+\en
 \begin{align*}
 	q_\pi(s,a) &= \sum_{s',r}p(s',r|s,a)\left[r+\gamma\sum_{a'}\pi(a'|s')q_\pi(s',a')\right] \\
 	&=\sum_{s',r}p(s',r|s,a) r +  \gamma\sum_{s',r}p(s',r|s,a)\sum_{a'}\pi(a'|s')q_\pi(s',a')\\
@@ -549,10 +553,11 @@ q_{\pi}(0,1) \\
 \vdots
 \end{bmatrix}
 \end{equation*}
-fix the matrix
+{\sol
+Here $ \Ppi $ is not invertible but it's still a contraction mapping, so we will use fixed point iteration to get the solutions here: $ q_{\pi}(0,0)\approx 1.05 , q_{\pi}(0,1)\approx 1.20, q_{\pi}(1,0)\approx 1.05, q_{\pi}(1,1)\approx 2.20 $. The greedy policy $g q_\pi$ is $g q_\pi(0|0)=0, g q_\pi(1|0)=1, g q_\pi(0|1)=0, g q_\pi(1|1)=1$.
 
-thus $ q_\pi = (\bf{I} - \gamma\Ppi)^{-1} + r_\pi $, the solutions are: .....
-
+}
+\en
 
 %\vspace{8cm}
 
@@ -571,13 +576,13 @@ As this is a regression problem, we use Mean Squared Error $  \left( Y - {\bf \t
 
 
 \begin{align*}
-	\theta_{t+1} &= \theta_t - \alpha_t \nabla_{\theta_t}(Y_t - \theta^\top \phi({\bf W}_t\x_t))^2\\
-	&= \theta_t + 2 \alpha_t (Y_t - \theta^\top \phi({\bf W}_t\x_t))\phi({\bf W}_t\x_t)\\
-	\\
+	%\theta_{t+1} &= \theta_t - \alpha_t \nabla_{\theta_t}(Y_t - \theta^\top \phi({\bf W}_t\x_t))^2\\
+	%&= \theta_t + 2 \alpha_t (Y_t - \theta^\top \phi({\bf W}_t\x_t))\phi({\bf W}_t\x_t)\\	
 	{\bf W}_{t+1} &= {\bf W}_t - \alpha_t \nabla_{{\bf W}_t}(Y_t - \theta^\top \phi({\bf W}_t\x_t))^2\\
-	&= \theta_t + 2 \alpha_t (Y_t - \theta^\top \phi({\bf W}_t\x_t))\nabla_{{\bf W}_t}\phi({\bf W}_t\x_t)\\
-	&= \theta_t + 2 \alpha_t (Y_t - \theta^\top \phi({\bf W}_t\x_t))\phi({\bf W}_t\x_t)\circ(1-\phi({\bf W}_t\x_t))\nabla_{{\bf W}_t}{\bf W}_t\x_t\\
-	&= \theta_t + 2 \alpha_t (Y_t - \theta^\top \phi({\bf W}_t\x_t))\phi({\bf W}_t\x_t)\circ(1-\phi({\bf W}_t\x_t))\x_t^\top\\
+	&= {\bf W}_t + 2 \alpha_t (Y_t - \theta^\top \phi({\bf W}_t\x_t))\nabla_{{\bf W}_t}\theta^\top \phi({\bf W}_t\x_t)\\
+	&= {\bf W}_t + 2 \alpha_t (Y_t - \theta^\top \phi({\bf W}_t\x_t))\theta\nabla_{{\bf W}_t} \phi({\bf W}_t\x_t)\\
+	&= {\bf W}_t + 2 \alpha_t (Y_t - \theta^\top \phi({\bf W}_t\x_t))\theta\phi({\bf W}_t\x_t)\circ(1-\phi({\bf W}_t\x_t))\circ\nabla_{{\bf W}_t}{\bf W}_t\x_t\\
+	&= {\bf W}_t + 2 \alpha_t (Y_t - \theta^\top \phi({\bf W}_t\x_t))\theta\phi({\bf W}_t\x_t)\circ(1-\phi({\bf W}_t\x_t))\circ\x_t^\top\\
 	& \text{ where $\circ$ indicates elementwise multiplication}
 \end{align*}
 
