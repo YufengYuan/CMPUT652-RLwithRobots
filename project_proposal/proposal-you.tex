@@ -1,0 +1,61 @@
+\documentclass[12pt]{article}
+
+% This first part of the file is called the PREAMBLE. It includes
+% customizations and command definitions. The preamble is everything
+% between \documentclass and \begin{document}.
+
+\usepackage[margin=1in]{geometry}  % set the margins to 1in on all sides
+\usepackage{graphicx}              % to include figures
+\usepackage{epstopdf}
+\usepackage{amsmath}               % great math stuff
+\usepackage{amsfonts}              % for blackboard bold, etc
+\usepackage{amsthm}                % better theorem environments
+
+
+
+
+\begin{document}
+
+\begin{center}
+{\bf \Large Extending Answer Set Programming: A Research Proposal}  \\
+\vspace{.1in}
+{\em Jia-Huai You}
+\end{center}
+
+
+Hard computational problems may be solved by using an intuitive modelling language that comes with computer software for processing programs written in the language. This is an example of what is called {\em declarative problem solving} and knowledge representation. The goal of this research is to investigate some important research issues in extending {\em Answer Set Programming} (ASP)  \cite{gelfond,Lifschitz:AAAI2008}, which has emerged as a promising declarative paradigm for solving hard computational problems.
+
+\vspace{.1in}
+The main idea of ASP is that a given problem is stated in terms of constraints that are expressed in a rule based
+language under the {\em answer set semantics}, where each answer set corresponds to a solution to the problem being solved. The formulation of ASP has been crystallized from years of research in knowledge representation, logic programming, and constraint satisfaction. The goal is to provide a declarative language with computational tools. With highly competitive ASP solvers already built, emerging applications have been explored, e.g., in molecular biology, decision support systems for the space shuttle controllers, planning, solving puzzles and games, and more recently, in reasoning with the web. 
+%The approach of ASP possesses a great potential in solving some complex real world problems efficiently in a declarative manner.
+
+\vspace{.1in}
+We propose to study several fundamental issues for the realization of this potential. Speficially, we will study two directions of extending ASP. 
+%on semantics, representation, computational complexity, programming methodology, and implementation algorithms. 
+%We plan to build some of these ideas in computer software to demonstrate the feasibility and potential in solving significant applications.
+First, to deal with complex real world problems, we must take representation and computational advantages of other computing
+paradigms. This may be due to the ease of representation, some desirable computational properties, the availability of efficient existing inference engines, or the need to combine different modes of reasoning, which is often desired in applications arising in clinical, policy making, and management domains, as well as in more recent interests in the Semantic Web. Under this research topic, we will investigate the language issues, the underlying semantics, the computational properties, as well as implementation algorithms.
+
+\vspace{.1in}
+The second direction of extending ASP concerns the issues of representing and reasoning with structured knowledge, such as
+ontological knowledge, that may require {\em closed world reasoning}. Currently, the problem is studied by formulating defeasible
+description logics. In general, this approach is not as flexible as rule-based formalisms like ASP. We propose to use ASP for representing and reasoning with defeasible ontological knowledge. However, this prospect raises a number of challenging questions on decidability, expressiveness, and other computational properties for logic programs with {\em existential rules}. 
+Computationally, current ASP solvers are designed to deal with finite structures, and the possibility of combining the current
+implementation techniques with those for decidable fragments of first-order logic presents an attractive direction for building the next
+generation of ASP solvers.
+
+\vspace{.1in}
+In summary, in this research we will address the theoretical, methodological, computational, and implementation issues arising from investigations in extending ASP, and apply the new techniques to real world applications. It is expected that our research will contribute
+to a better understanding, and well defined computational frameworks, for combining ASP with other reasoning paradigms, and in representing structured knowledge and beyond that may be interpreted by a combination of open and closed world reasoning
+
+\newpage
+\noindent
+{\bf Note: }  This proposal was prepared through discussions with Prof. xxx and PhD student xxx. 
+
+\bibliographystyle{plain}
+
+\bibliography{journal09}
+
+
+\end{document}

@@ -1,0 +1,15 @@
+\begin{thebibliography}{1}
+
+\bibitem{gelfond}
+Michael Gelfond.
+\newblock Answer sets.
+\newblock In {\em Handbook of Knowledge Representation}, chapter~7, pages
+  285--316. Elsevier, 2008.
+
+\bibitem{Lifschitz:AAAI2008}
+Vladimir Lifschitz.
+\newblock What is answer set programming?
+\newblock In {\em Proceedings of the Twenty-Third AAAI Conference on Artificial
+  Intelligence}, pages 1594--1597, Chicago, Illinois, USA, 2008. AAAI Press.
+
+\end{thebibliography}
